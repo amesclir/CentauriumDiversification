@@ -76,4 +76,65 @@ dev.off()
 
 ```
 
+Pagel Models
+
+```{r}
+library(phytools)
+mydata <- read.csv("data.csv")
+names(mydata)
+
+Polyploidy <- mydata[,5]
+names(Polyploidy) <- mydata[,1]
+AncestralArea <- mydata[,3]
+names(AncestralArea) <- mydata[,1]
+
+Dispersal <- mydata[,4]
+names(Dispersal) <- mydata[,1]
+
+tree <- mytree
+
+
+x <-  Polyploidy
+x[x==0] <- "D"
+x[x==1] <- "P"
+y <- AncestralArea
+y[y==0] <- "A"
+y[y==1] <- "N"
+fit.xy<-fitPagel3(tree,x,y,dep.var="xyc")
+fit.x<-fitPagel3(tree,x,y,dep.var="xc")
+fit.y<-fitPagel3(tree,x,y,dep.var="yc")
+
+fit.xy
+fit.x
+fit.y
+
+fit.xy.Polyploidy.AncestralArea <-fit.xy
+fit.x.Polyploidy.AncestralArea <-fit.x
+fit.y.Polyploidy.AncestralArea <-fit.y
+
+pdffn = paste0("fit.x.Polyploidy.AncestralArea.pdf")
+pdf(file=pdffn, width=8, height=8)
+plot(fit.y.Polyploidy.AncestralArea,lwd.by.rate=TRUE,
+    main=c("a) Independent model",
+    "b) Dependent (Polyploidy | AncestralArea) model"))
+dev.off()
+
+
+
+y <- Dispersal
+y[y==0] <- "N"
+y[y==1] <- "W"
+fit.xy<-fitPagel3(tree,x,y,dep.var="xyc")
+fit.x<-fitPagel3(tree,x,y,dep.var="xc")
+fit.y<-fitPagel3(tree,x,y,dep.var="yc")
+
+fit.xy
+fit.x
+fit.y
+
+fit.xy.Polyploidy.AncestralArea <-fit.xy
+fit.x.Polyploidy.AncestralArea <-fit.x
+fit.y.Polyploidy.AncestralArea <-fit.y
+
+``
 
